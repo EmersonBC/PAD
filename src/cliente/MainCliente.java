@@ -1,5 +1,7 @@
 package cliente;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -16,12 +18,22 @@ public class MainCliente {
 	public static void main(String[] args) throws NotBoundException, IOException {
 		Cliente cliente = (Cliente) Naming.lookup("calc");
 		Scanner sc = new Scanner(System.in);
-		String op;
+		String nome;
+		String op = "0";
 		
-		System.out.println("Digite a operacao: ");
-		op = sc.nextLine();
+		System.out.println("Digite o nome do arquivo:");
+		nome = sc.nextLine();
 		
-		System.out.println("\n"+ op +" = "+ cliente.operacao(op));
+		FileReader arq = new FileReader(nome); 
+		BufferedReader lerArq = new BufferedReader(arq);
+		
+		while (op != null) { 
+			op = lerArq.readLine();
+			
+			if(op != null)
+				System.out.println("\n"+ op +" = "+ cliente.operacao(op));
+		}
+
 	}
 
 }
